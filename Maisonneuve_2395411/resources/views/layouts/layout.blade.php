@@ -23,7 +23,8 @@
             <!-- </span> -->
             </a>  
             
-            <nav class="d-flex flex-row justify-content-between gap-8 align-items-end mb-2 gap-5">                
+            <nav class="d-flex flex-row justify-content-between gap-8 align-items-end mb-2 gap-5">   
+            <a class="text-light text-decoration-none fw-light hover_blue" href="{{route('login')}}">Login</a>             
                 <!-- <button type="button"> -->
                     <a href="{{ route('etudiant.index')}}" class="text-light text-decoration-none fw-light hover_blue">Voir etudiants</a>
                 <!-- </button>
