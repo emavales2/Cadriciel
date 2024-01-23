@@ -3,7 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EtudiantController;
 use App\Http\Controllers\CustomAuthController;
-use App\Http\Controllers\FormController;
+use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\LocalizationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,11 +41,18 @@ Route::get('/forgot-password', [CustomAuthController::class, 'forgotPassword'])-
 Route::post('/forgot-password', [CustomAuthController::class, 'tempPassword'])->name('temp.password');
 Route::get('/new-password/{user}/{tempPassword}', [CustomAuthController::class, 'newPassword'])->name('new.password');
 Route::post('/new-password/{user}/{tempPassword}', [CustomAuthController::class, 'storeNewPassword']);
-
-Route::get('/registration', [CustomAuthController::class, 'create'])->name('user.registration');
-Route::post('/registration-store', [CustomAuthController::class, 'store'])->name('user.store');
-
-Route::get('/dashboard', [CustomAuthController::class, 'index'])->name('blog.index');
 Route::get('/logout', [CustomAuthController::class, 'logout'])->name('logout');
 
-Route::post('/process-form', [FormController::class, 'store'])->name('form.process');
+/* ------- * CRÉER ET STOCKER NOUVEL COMPTE * ------- */
+// Route::get('/registration',[CustomAuthController::class, 'create'])->name('registration')->middleware('can:create-users');
+Route::get('/registration',[CustomAuthController::class, 'create'])->name('registration');
+Route::post('/registration',[CustomAuthController::class, 'store']);
+
+Route::get('/dashboard', [CustomAuthController::class, 'index'])->name('index');
+Route::get('/user-list',[CustomAuthController::class, 'userList'])->name('user.list')->middleware('auth');
+
+/* ------- * ROUTES ARTICLE * ------- */
+Route::get('/article-create', [ArticleController::class, 'create'])->name('article.create');
+
+
+Route::get('/lang/{locale}', [LocalizationController::class, 'index'])->name('lang');

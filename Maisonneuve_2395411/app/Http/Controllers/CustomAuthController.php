@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Ville;
+use App\Models\Etudiant;
+use App\Models\Article;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
@@ -26,7 +29,10 @@ class CustomAuthController extends Controller {
      */
     public function create() {
         
-        return view(auth.create);
+        
+        // return view('auth.create');
+        $villes = Ville::all();
+        return view('auth.create', compact('villes'));
     }
 
     /**
@@ -44,11 +50,24 @@ class CustomAuthController extends Controller {
         ]);
         
         $user = new User;
-        $user->fill($request->all());
+        // $user->fill($request->all());
+        $user->name = $request->name;
+        $user->email = $request->email;
         $user->password = Hash::make($request->password);
         $user->save();
 
-        return redirect(route('login'))->withSuccess('User enregistré');
+        $etudiant = new Etudiant;
+        // $etudiant->fill($request->all());
+        // $etudiant->save();
+        $etudiant->name = $request->name;
+        $etudiant->phone = $request->phone;
+        $etudiant->address = $request->address;
+        $etudiant->birthday = $request->birthday;
+        $etudiant->ville_id = $request->ville_id;
+
+        $user->etudiant()->save($etudiant);
+
+        return redirect(route('login'))->withSuccess('Compte enregistré !');
     }
 
     /**

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateVillesTable extends Migration
+class CreateMaisonnVillesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateVillesTable extends Migration
      */
     public function up()
     {
-        Schema::create('villes', function (Blueprint $table) {
+        Schema::create('maisonn_villes', function (Blueprint $table) {
 
             $table->engine = 'InnoDB';
             
-            $table->increments('id');
+            // $table->increments('id');
+            $table->id();
             $table->string('name')->unique()->nullable($value = false);
         });
     }

@@ -11,26 +11,28 @@
         <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
     </head>
 
-    <body class=".container-fluid">
+    <body class="container-fluid">
 
         <header class="d-flex flex-row justify-content-between p-4 mh-7em dk_blue">            
-            <!-- <span class="d-flex flex-row justify-content-between mw-auto gap-4"> -->
-            <a href="{{ url('/')}}" class="d-flex flex-row justify-content-between mw-auto gap-4 text-decoration-none">
-                <!-- <aside class="mh-100"> -->
-                    <img class="" src="{{ asset('assets/img/College-de-Maisonneuve.svg') }}" alt="">
-                <!-- </aside>                    -->
-                <h3 class="header_title d-flex align-items-end">{{ config('app.name')}}</h3>
-            <!-- </span> -->
+            @php $locale = session()->get('locale') @endphp
+            <a class="navbar-brand text-light text-decoration-none " href="#">@lang('lang.text_hello') {{Auth::user() ? Auth::user()->name : "Guest"}}</a>
+
+            <a href="{{ url('/')}}" class="d-flex flex-row justify-content-between mw-auto gap-4 text-decoration-none">              
+                <img class="" src="{{ asset('assets/img/College-de-Maisonneuve.svg') }}" alt="">                
+                <h3 class="header_title d-flex align-items-end">{{ config('app.name')}}</h3>            
             </a>  
             
             <nav class="d-flex flex-row justify-content-between gap-8 align-items-end mb-2 gap-5">   
-            <a class="text-light text-decoration-none fw-light hover_blue" href="{{route('login')}}">Login</a>             
-                <!-- <button type="button"> -->
-                    <a href="{{ route('etudiant.index')}}" class="text-light text-decoration-none fw-light hover_blue">Voir etudiants</a>
-                <!-- </button>
-                <button type="button"> -->
-                    <a href="{{ route('etudiant.create')}}" class="text-light text-decoration-none fw-light hover_blue">Ajouter etudiant</a>
-                <!-- </button>                -->
+                @guest
+                <a class="nav-link text-light text-decoration-none fw-light hover_blue" href="{{route('login')}}">login</a>
+                <a class="nav-link text-light text-decoration-none fw-light hover_blue" href="{{route('registration')}}">créer compte</a>             
+                
+                @else
+                <a class="nav-link text-light text-decoration-none fw-light hover_blue" href="{{ route('etudiant.index')}}">voir etudiants</a>
+                <a class="nav-link text-light text-decoration-none fw-light hover_blue" href="{{route('article.create')}}">créer article</a>
+                <a class="nav-link text-light text-decoration-none fw-light hover_blue" href="{{route('logout')}}">Logout</a>
+                @endguest
+                
             </nav>
         </header>
         
