@@ -10,7 +10,7 @@ class Article extends Model
     use HasFactory;
 
     protected $table = 'maisonn_articles';
-    protected $fillable = ['title', 'art_body', 'user_id', 'date'];
+    protected $fillable = ['title', 'art_body', 'user_id'];
 
     public function articleHasUser() {
         return $this->hasOne('App\Models\User', 'id', 'user_id');

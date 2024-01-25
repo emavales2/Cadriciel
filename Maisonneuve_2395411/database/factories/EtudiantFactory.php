@@ -28,7 +28,7 @@ class EtudiantFactory extends Factory {
             // 'name'=>$this->faker->name,
             'address'=>$this->faker->address,
             'phone'=>$this->faker->phoneNumber,
-            'email'=>$this->faker->email,
+            // 'email'=>$this->faker->email,
             'birthday'=>$this->faker->date,
 
             // Les villes existent déjà, donc pas de faker

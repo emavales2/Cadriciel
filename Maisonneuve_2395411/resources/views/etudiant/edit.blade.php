@@ -7,38 +7,38 @@
             @method('put')
             @csrf
             <header class="text-center py-2 fw-bold fs-2em text-primary">
-                Modifier les Coordonées
+            @lang('lang.mod_profile')
             </header>
             <section class="d-flex flex-column gap-4 py-4">
                 <article class="control-group col-12">
-                    <label for="name">Nom</label>
+                    <label for="name">@lang('lang.name')</label>
                     <input type="text" id="name" name="name" class="form-control mt-2" value="{{ $etudiant->name}}">
                 </article>
 
                 <article class="control-group col-12">
-                    <label for="address">Adresse</label>
+                    <label for="address">@lang('lang.address')</label>
                     <input type="text" id="address" name="address" class="form-control mt-2" value="{{ $etudiant->address}}">
                 </article>
 
                 <article class="control-group col-12">
-                    <label for="phone">No. Téléphone</label>
+                    <label for="phone">@lang('lang.phone')</label>
                     <input type="tel" id="phone" name="phone" class="form-control mt-2" value="{{ $etudiant->phone}}">
                 </article>
 
                 <article class="control-group col-12">
-                    <label for="email">Courriel</label>
-                    <input type="email" id="email" name="email" class="form-control mt-2" value="{{ $etudiant->email}}">
+                    <label for="email">@lang('lang.email')</label>
+                    <input type="email" id="email" name="email" class="form-control mt-2" value="{{ $etudiant->etudiantHasUser->email }}">
                 </article>
 
                 <article class="control-group col-12">
-                    <label for="birthday">Date de Naissance</label>
+                    <label for="birthday">@lang('lang.birthdate')</label>
                     <input type="date" id="birthday" name="birthday" class="form-control mt-2" value="{{ $etudiant->birthday}}">
                 </article>
                 
                 <article class="control-group col-12">
-                    <label for="ville">Ville</label>
+                    <label for="ville">@lang('lang.city')</label>
                     <select id="ville" name="ville_id" class="form-control mt-2">                    
-                        <option value=null>Selectionnez une ville SVP</option> 
+                        <option value=null>@lang('lang.select_city')</option> 
                         @foreach($villes as $ville)
                         <option value="{{ $ville->id }}" {{ $etudiant->ville_id == $ville->id ? 'selected' : '' }}>{{ $ville->name }}</option>                    
                         @endforeach                    
@@ -47,7 +47,10 @@
             </section>
 
             <footer class="card-footer text-center pt-2">
-                <input type="submit" value="Modifier" class="btn btn-primary">
+                <input type="submit" value="@lang('lang.save_b')" class="btn btn-primary">
+                <button class="btn btn-primary">
+                    <a class="nav-link text-light text-decoration-none fw-light hover_blue" href="{{route('dashboard')}}">@lang('lang.cancel_b')</a>
+                </button>
             </footer>
         </form>            
     </div>

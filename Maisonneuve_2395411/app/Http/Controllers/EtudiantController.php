@@ -3,93 +3,57 @@
 namespace App\Http\Controllers;
 
 use App\Models\Etudiant;
+use App\Models\Article;
+use App\Models\User;
 use App\Models\Ville;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 
 class EtudiantController extends Controller {
-    /**
-     * Display a listing of the resource.
-     * @return \Illuminate\Http\Response
-     */
 
-    public function index() {
-        // $etudiants = Etudiant::all();
+    /** --------- * * CREATE, STORE sont dans CustAuthController.php. Pas d'INDEX pour les étudiants/users * * --------- **/
 
-        // Utilise la pagination directement sur les résultats de l'index.
-        $etudiants = Etudiant::orderBy('name')->paginate(20);
-
-        return view('etudiant.index', compact('etudiants'));
-    }
-
-
-    /**
-     * Show the form for creating a new resource.
-     * @return \Illuminate\Http\Response
-     */
-
-    public function create() {
-        
-        $villes = Ville::all();
-        return view('etudiant.create', compact('villes'));
-    }
-
-
-    /**
-     * Store a newly created resource in storage.
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-
-    public function store(Request $request) {
-        
-        //create () -> insert into .......
-        // last inserted id ?
-        // select * from... where Id = last inserted
-       
-        $newEtudiant = Etudiant::create([
-            'name' => $request->name,
-            'address' => $request->address,
-            'phone'=> $request->phone,
-            'email'=> $request->email,
-            'birthday'=> $request->birthday,
-            'ville_id' => $request->ville_id,
-        ]);
-
-        //return $newBlog;
-        return redirect(route('etudiant.show', $newEtudiant->id))->withSuccess('Etudiant enregistré!');
-    }
-
-
-    /**
+    /** -------------------- * * SHOW (Montre l'user cible) * * --------------------
+     * 
      * Display the specified resource.
      * @param  \App\Models\Etudiant  $etudiant
-     * @return \Illuminate\Http\Response
-     */
+     * @return \Illuminate\Http\Response */
 
+    // public function show($id) {
     public function show(Etudiant $etudiant) {
-        //New Etudiant
-        //$Etudiant = select * from etudiants where id = $Etudiant
         
-        //return $Etudiant;
-        return view('etudiant.show', compact('etudiant'));
+        // Verifier que l'etudiant signed in est le meme qui veut voir son profil
+        if (auth()->check() && auth()->user()->id === $etudiant->id) {
+            return view('etudiant.show', compact('etudiant'));
+       
+        } else {
+            return redirect('dashboard')->with('error', 'Unauthorized access.');
+        }
     }
 
 
-    /**
+    /** -------------------- * * EDIT (Formulaire pour modifier étudiant/user cible) * * --------------------
+     * 
      * Show the form for editing the specified resource.
      * @param  \App\Models\Etudiant  $etudiant
-     * @return \Illuminate\Http\Response
-     */
+     * @return \Illuminate\Http\Response */
 
     public function edit(Etudiant $etudiant) {
 
-        $villes = Ville::all();
-        return view('etudiant.edit', compact('etudiant', 'villes'));
+        // Verifier que l'etudiant signed in est le meme qui veut editer son profil
+        if (auth()->check() && auth()->user()->id === $etudiant->id) {
+            $villes = Ville::all();
+            return view('etudiant.edit', compact('etudiant', 'villes'));
+       
+        } else {
+            return redirect('dashboard')->with('error', 'Unauthorized access.');
+        }
     }
 
-    /**
+
+    /** -------------------- * * UPDATE (Stocke les données modifiées dans tables maisonn_etudiant et user) * * --------------------
+     * 
      * Update the specified resource in storage.
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Etudiant  $etudiant
@@ -102,26 +66,30 @@ class EtudiantController extends Controller {
             'name' => $request->name,
             'address' => $request->address,
             'phone'=> $request->phone,
-            'email'=> $request->email,
             'birthday'=> $request->birthday,
             'ville_id' => $request->ville_id,
         ]);
 
-        return redirect(route('etudiant.show', $etudiant->id))->withSuccess('Etudiant mis a jour!');
+        $etudiant->etudiantHasUser->update([
+            'email'=> $request->email
+        ]);
+
+        return redirect(route('etudiant.show', $etudiant->id))->withSuccess('Compte mis a jour!');
     }
 
 
-    /**
+    /** -------------------- * * DESTROY (Efface le record des tables maisonn_tudiant et user) * * --------------------
+     * 
      * Remove the specified resource from storage.
      * @param  \App\Models\Etudiant  $etudiant
-     * @return \Illuminate\Http\Response
-     */
+     * @return \Illuminate\Http\Response */
 
     public function destroy(Etudiant $etudiant) {
         
         $etudiant->delete();
+        $etudiant->etudiantHasUser->delete();
 
-        return redirect(route('etudiant.index'))->withSuccess('Etudiant effacé!');
+        return redirect(route('login'))->withSuccess('Compte effacé!');
     }
 
 
@@ -173,14 +141,12 @@ class EtudiantController extends Controller {
         // FROM maisonn.etudiants
         // group by ville_id;
 
-        // $etudiant = Etudiant::select(DB::raw('count(*) as blogs, user_id'))
-        //     ->groupBy('user_id')
+        // $etudiant = Etudiant::select(DB::raw('count(*) as blogs, id'))
+        //     ->groupBy('id')
         //     ->get();
 
         $etudiant = Etudiant::find(1);
 
         return $etudiant->etudiantHasVille->name;
-
     }
-
 }

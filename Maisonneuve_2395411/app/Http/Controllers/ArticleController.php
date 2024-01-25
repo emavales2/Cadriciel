@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\ArticleRequest;
 use PDF;
 
 class ArticleController extends Controller
@@ -17,7 +19,11 @@ class ArticleController extends Controller
      */
     public function index() {
         // if(Auth::check()){
-            $articles = Article::all();
+            // $articles = Article::all();
+            // $articles = Article::orderBy('title')->paginate(20);
+            $articles = Article::orderBy('created_at')->with('articleHasUser.userHasEtudiant')->paginate(10);
+            
+            // return($articles);
             return view('article.index', compact('articles'));
         // }
         // return redirect(route('login'));
@@ -30,7 +36,10 @@ class ArticleController extends Controller
      */
     public function create() {
 
-        return view('article.create', compact('articles'));
+        // return view('article.create', compact('articles'));
+
+        $users = User::all();
+        return view('article.create', compact('users'));
     }
 
     /**
@@ -41,17 +50,25 @@ class ArticleController extends Controller
      */
     public function store(Request $request) {
         
-        $newArticle = Article::create([
+        // dd($request->all());
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'art_body' => 'required|string',
+        ]);
 
+        $newArticle = Article::create([
             'title' => $request->title,
             'user_id' => Auth::user()->id,
-            'art_body' => $request->body,
-            'date' =>  $request->date,        
+            'art_body' => $request->art_body,       
         ]);
 
         //return $newArticle;
         // return redirect(route('article.show', $newArticle->id))->withSuccess(trans('lang.text_success_article'));
         return redirect(route('article.show', $newArticle->id));
+
+
+
+        
     }
 
 
@@ -74,7 +91,14 @@ class ArticleController extends Controller
      */
     public function edit(Article $article) {
         
-        return view('article.edit', compact('article'));
+        // Verifier que l'etudiant signed in est le meme qui veut editer son article
+        if (auth()->check() && auth()->user()->id === $article->user_id) {
+  
+            return view('article.edit', compact('article'));
+       
+        } else {
+            return redirect('dashboard')->with('error', 'Unauthorized access.');
+        }
     }
 
     /**
@@ -91,7 +115,7 @@ class ArticleController extends Controller
             'art_body' => $request->art_body,
         ]);
 
-        return redirect(route('article.show', $srticle->id))->withSuccess('Article mis a jour!');
+        return redirect(route('article.show', $article->id))->withSuccess('Article mis a jour!');
     }
 
     /**
@@ -178,4 +202,3 @@ class ArticleController extends Controller
         //return $pdf->stream('article.pdf');
     }
 }
-

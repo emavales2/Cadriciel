@@ -1,3 +1,56 @@
+
+--------- * STATE OF * THINGS ---------
+
+--- USER/ETUDIANT ---
+
+1) Login - DONE     2pts
+2) Logout - DONE
+3) Permissions - DONE
+------------------------------------------------
+4) Register new account
+    Data into users table - DONE        All this was done so no points
+    Data into students table - DONE
+5) Modifier la compte 
+    Data etudiants + table - DONE
+    Data users + table - DONE
+6) Effacer la compte utilisateur
+    Data etudiants + table - DONE
+    Data users + table - DONE
+
+
+--- ARTICLE ---
+
+7) Display all articles - DONE
+8) Post new article - DONE          2 pts CRUD
+9) Modify article - DONE            2 pts new table
+10) Delete article - DONE
+------------------------------------------------   
+
+
+--- FALTA ---
+
+1) Verfier validation
+2) Bilingual
+3) CSS
+5) Page partage fichiers
+
+
+
+to validate , command line:
+php artisan make:request ArticleRequest
+
+pero con el modelo que queremos
+
+<td>{{ $article->articletHasUser->email }}</td>  
+
+<a class="nav-link text-light text-decoration-none fw-light hover_blue" href="{{ route('etudiant.show', $etudiant->id)}}">mon profil</a>
+<a href="{{ route('blog.show', $blog->id)}}">{{ $blog->title }}
+<a class="navbar-brand" href="#">@lang('lang.text_hello') {{Auth::user() ? Auth::user()->name : "Guest"}}</a>
+
+htaccess exercice 1 mettre dans la racine du projet (pour vue en el otro proyecto)
+
+
+
 ok, so originally, i had 2 main tables: students and cities. the "id" column in the cities table was in the students table as a FK ("ville_id"). Now, because of needing a login/logout authorization component, I need to link the native User model/table with the students table so authorization goes through Users. How do i do this? 
 
 ---- . ------
@@ -221,6 +274,8 @@ class CreateMaisonnArticlesTable extends Migration
 
 
 
+
+
 --- villes ---
 
 <?php
@@ -325,3 +380,30 @@ class CreateMaisonnVillesTable extends Migration
         </div>
     </main>
 @endsection
+
+
+
+
+SELECT * FROM maisonneuve.maisonn_etudiants;
+SELECT * FROM maisonneuve.users;
+
+drop database maisonneuve;
+create database maisonneuve;
+
+SHOW OPEN TABLES LIKE 'maisonn_etudiants';
+SHOW OPEN TABLES FROM maisonneuve;
+SHOW TABLE STATUS LIKE 'maisonn_etudiants';
+
+SELECT * FROM maisonneuve.maisonn_etudiants;
+SELECT * FROM maisonneuve.maisonn_articles;
+SELECT * FROM maisonneuve.users;
+SELECT * FROM maisonneuve.maisonn_villes;
+
+DROP table maisonneuve.maisonn_etudiants;
+
+REPAIR TABLE maisonn_etudiants;
+
+SELECT * FROM my_blog.users;
+
+SHOW PROCESSLIST;
+SHOW GRANTS FOR 'root'@'localhost';

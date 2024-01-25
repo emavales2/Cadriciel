@@ -8,16 +8,17 @@
     </div>
     @endif
                             
-    <form  method="post">
+    <form method="post">
+        @method('put')
         @csrf
         <header class="text-center py-2 fw-bold fs-2em text-primary">
-        @lang('lang.new_art_title')
+        @lang('lang.mod_article')
         </header>
 
         <section class="d-flex flex-column gap-4 py-4">
             <article class="control-group col-12">
                 <label for="title">@lang('lang.art_title')</label>
-                <input type="text" id="title" name="title" class="form-control mt-2" value="{{old('title')}}">
+                <input type="text" id="title" name="title" class="form-control mt-2" placeholder="Title" value="{{ $article->title }}">
             
                 @if ($errors->has('title'))
                 <div class="text-danger mt-2">
@@ -28,7 +29,7 @@
 
             <article class="control-group col-12">
                 <label for="art_body">@lang('lang.art_body')</label>
-                <textarea type="text" id="art_body" name="art_body" class="form-control mt-2 rows="10" style="height: 300px;"> {{old('art_body')}}</textarea>
+                <input type="art_body" id="art_body" name="art_body" class="form-control mt-2" placeholder="content" value="{{ $article->art_body }}">
 
                 @if ($errors->has('art_body'))
                 <div class="text-danger mt-2">
@@ -39,7 +40,10 @@
         </section>
         
         <footer class="card-footer text-center pt-2">
-            <input type="submit" value="@lang('lang.post_b')" class="btn btn-primary">
+            <input type="submit" value="@lang('lang.save_b')" class="btn btn-primary">
+            <button class="btn btn-primary">
+                <a class="nav-link text-light text-decoration-none fw-light hover_blue" href="{{route('dashboard')}}">@lang('lang.cancel_b')</a>
+            </button>
         </footer>
     </form>
 </div> 

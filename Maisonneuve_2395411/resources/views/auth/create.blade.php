@@ -11,13 +11,13 @@
     <form  method="post">
         @csrf
         <header class="text-center py-2 fw-bold fs-2em text-primary">
-            Nouveau Compte Usager
+        @lang('lang.new_user_title')
         </header>
 
         <section class="d-flex flex-column gap-4 py-4">
             <article class="control-group col-12">
-                <label for="name">Nom</label>
-                <input type="text" id="name" name="name" class="form-control mt-2" placeholder="Name" value="{{old('name')}}">
+                <label for="name">@lang('lang.name')</label>
+                <input type="text" id="name" name="name" class="form-control mt-2"  value="{{old('name')}}">
             
                 @if ($errors->has('name'))
                 <div class="text-danger mt-2">
@@ -27,8 +27,8 @@
             </article>
 
             <article class="control-group col-12">
-                <label for="email">Courriel</label>
-                <input type="email" id="email" name="email" class="form-control mt-2" placeholder="email" value="{{old('email')}}">
+                <label for="email">@lang('lang.email')</label>
+                <input type="email" id="email" name="email" class="form-control mt-2"  value="{{old('email')}}">
 
                 @if ($errors->has('email'))
                 <div class="text-danger mt-2">
@@ -38,8 +38,8 @@
             </article>
 
             <article class="control-group col-12">
-                <label for="password">Mot de Passe</label>
-                <input type="password" id="password" name="password" class="form-control mt-2" placeholder="password">
+                <label for="password">@lang('lang.password')</label>
+                <input type="password" id="password" name="password" class="form-control mt-2" >
 
                 @if ($errors->has('password'))
                 <div class="text-danger mt-2">
@@ -49,24 +49,24 @@
             </article>
 
             <article class="control-group col-12">
-                <label for="phone">No. Téléphone</label>
-                <input type="tel" id="phone" name="phone" class="form-control mt-2" placeholder="phone">
+                <label for="phone">@lang('lang.phone')</label>
+                <input type="tel" id="phone" name="phone" class="form-control mt-2">
             </article>
 
             <article class="control-group col-12">
-                <label for="address">Adresse</label>
-                <input type="text" id="address" name="address" class="form-control mt-2" placeholder="addresse">
+                <label for="address">@lang('lang.address')</label>
+                <input type="text" id="address" name="address" class="form-control mt-2">
             </article>
                             
             <article class="control-group col-12">
-                    <label for="birthday">Date de Naissance</label>
+                    <label for="birthday">@lang('lang.birthdate')</label>
                     <input type="date" id="birthday" name="birthday" class="form-control mt-2">
                 </article>
 
             <article class="control-group col-12">
-                <label for="ville">Ville</label>
+                <label for="ville">@lang('lang.city')</label>
                 <select id="ville" name="ville_id" class="form-control mt-2">                    
-                    <option value=null>Selectionnez une ville SVP</option> 
+                    <option value=null>@lang('lang.select_city')</option> 
                     @foreach($villes as $ville)
                     <option value="{{ $ville->id }}">{{ $ville->name }}</option>                       
                     @endforeach                    
@@ -75,7 +75,7 @@
         </section>
         
         <footer class="card-footer text-center pt-2">
-            <input type="submit" value="Sauvegarder" class="btn btn-primary">
+            <input type="submit" value="@lang('lang.save_b')" class="btn btn-primary">
         </footer>
     </form>
 </div> 

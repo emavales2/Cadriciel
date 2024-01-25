@@ -12,70 +12,71 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 
 class CustomAuthController extends Controller {
-    /**
+    
+    /** -------------------- * * INDEX (Login page) * * --------------------
+     * 
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index() {
-        
+     * @return \Illuminate\Http\Response */
+    
+    public function index() {    
         return view('auth.login');
     }
 
-    /**
+
+    /** -------------------- * * CREATE (Formulaire pour creer étudiant/user) * * --------------------
+     * 
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create() {
-        
-        
-        // return view('auth.create');
+     *  @return \Illuminate\Http\Response */
+    
+    public function create() {    
+
         $villes = Ville::all();
-        return view('auth.create', compact('villes'));
+        return view('auth.create', compact('villes'));    
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request) {
 
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:6|max:20'
-        ]);
+    /** -------------------- * * STORE (Stocke les données dans tables maisonn_etudiant et user) * * --------------------
+     * 
+     * Store a newly created resource in storage.
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response */
+    
+     public function store(Request $request) {
         
-        $user = new User;
-        // $user->fill($request->all());
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = Hash::make($request->password);
+        $request->validate([
+            'name' => 'required|string',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:6|max:20',
+        ]);
+
+        $user = new User([
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+
         $user->save();
 
-        $etudiant = new Etudiant;
-        // $etudiant->fill($request->all());
-        // $etudiant->save();
-        $etudiant->name = $request->name;
-        $etudiant->phone = $request->phone;
-        $etudiant->address = $request->address;
-        $etudiant->birthday = $request->birthday;
-        $etudiant->ville_id = $request->ville_id;
-
-        $user->etudiant()->save($etudiant);
+        $etudiant = new Etudiant([
+            'id' => $user->id,
+            'name' => $request->name,
+            'phone' => $request->phone,
+            'address' => $request->address,
+            'birthday' => $request->birthday,
+            'ville_id' => $request->ville_id,
+        ]);
+    
+        // Save Etudiant and associate it with the User
+        $etudiant->save();
 
         return redirect(route('login'))->withSuccess('Compte enregistré !');
     }
 
-    /**
-     * Display the specified resource.
-     *
+
+    /** -------------------- * * AUTHENTICATION (Valide le login et ouvre la session) * * --------------------
+     * 
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+     * @return \Illuminate\Http\Response */
+ 
     public function authentication(Request $request) {
         
         $request->validate([
@@ -89,93 +90,21 @@ class CustomAuthController extends Controller {
                 return redirect('login') -> withErrors(trans('auth.failed'));
             endif;
 
-            $user = Auth::getProvider()->retrieveByCredentials($credentials);
-            
+            $user = Auth::getProvider()->retrieveByCredentials($credentials);            
             Auth::login($user, $request->get('remember'));
             
             return redirect()->intended('dashboard')->withSuccess('Signed in');
     }
 
 
-     /**
-     * Display the specified resource.
-     *
+    /** -------------------- * * LOGOUT (Detruit la session) * * --------------------
+     * 
      * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-
-     // Is this the equivalent of "show" i wonder?
-    public function dashboard(User $user) {
-        
-        $name = 'Guest';
-
-        if (Auth::check()) {
-            $name = Auth::user()->name;
-        }
-
-        return view('blog.index', ['name' =>$name]);
-    }
-
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
+     * @return \Illuminate\Http\Response */
 
     public function logout() {
-
         Session::flush();
         Auth::logout();
         return redirect(route('login'));
-    }
-
-
-
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function show(User $user)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(User $user)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, User $user)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(User $user)
-    {
-        //
     }
 }

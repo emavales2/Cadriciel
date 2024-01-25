@@ -15,8 +15,8 @@ class CreateMaisonnEtudiantsTable extends Migration
     {
         Schema::create('maisonn_etudiants', function (Blueprint $table) {
 
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->unsignedBigInteger('id');
+            $table->foreign('id')->references('id')->on('users')->onDelete('cascade');
 
             $table->string('name');
             $table->string('address');

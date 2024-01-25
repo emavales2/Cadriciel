@@ -1,25 +1,49 @@
-@extends('layouts.app')
+@extends('layouts.layout')
 @section('content')
-<nav class="navbar navbar-expand-lg bg-light">
- <div class="container-fluid">
- <a class="navbar-brand" href="#">Hello {{ $name }}</a>
- <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
-aria-expanded="false" aria-label="Toggle navigation">
- <span class="navbar-toggler-icon"></span>
- </button>
- <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
- <div class="navbar-nav">
- @guest
- <a class="nav-link" href="{{route('user.registration')}}">Registration
-</a>
- <a class="nav-link" href="{{route('login')}}">Login</a>
- @else
- <a class="nav-link" href="{{route('blog.index')}}">Blogs</a>
- <a class="nav-link" href="{{route('logout')}}">Logout</a>
- @endguest
- </div>
- </div>
- </div>
-</nav>
+
+
+<div class="d-flex flex-column align-items-center">
+    <header class="m-5">
+        <h2 class="text-center pt-5 fw-bold fs-3em text-primary">@lang('lang.art_index_title')</h2>
+    </header>
+
+    <button class="btn btn-primary mb-4">
+        <a class="nav-link text-light text-decoration-none fw-light hover_blue" href="{{route('article.create')}}">@lang('lang.new_art_b')</a>
+    </button>
+
+    <div class="border border-dark-subtle p-5 rounded-5 d-flex flex-column align-items-center">
+        <table class="table table-hover m-5 mt-0 pt-5 mw-40em">
+            <thead>
+                <tr>
+                    <th class="px-1">@lang('lang.art_title')</th>
+                    <th>@lang('lang.author')</th>
+                    <th>@lang('lang.date')</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse($articles as $article)
+                    <tr class="p-2">
+                        <td class="px-1"><a href="{{ route('article.show', $article->id)}}" class="text-decoration-none">{{ $article->title }}</a></td>                             
+                        <!-- Ma version de PHP est trop vieille pour pouvoir utiliser le null-safe -->
+                        <!-- Idéalement, écrire etudiantHasVille?->name -->
+                        <td>{{ $article->articleHasUser->userHasEtudiant->name }}</td>   
+                        <td>{{ $article->created_at->format('d/m/Y') }}</td> 
+                         
+                    </tr>
+                    @empty
+                    <tr>
+                        <td class="text-danger">@lang('lang.no_art')</td>                           
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
+
+        <aside class="nowrap">    
+            <!-- This changes the default tailwind pagination for whatever i choose out of the vendor/pagination folder. I did have to create a pagination.php in the config folder to change the default, though -->
+            {{ $articles->links('vendor.pagination.bootstrap-4') }}
+        </aside>
+    </div>
+
+</div>
+
 @endsection
