@@ -22,15 +22,11 @@ Route::get('/', function () {
     return view('home');
 });
 
+/* ------- * CRÉER ET ENREGISTRER NOUVEL COMPTE ÉTUDIANT/E * ------- */
 
-/* ------- * ROUTES ÉTUDIANTS * -------  */ 
-
-
-
-// Route::get('/etudiant-create', [EtudiantController::class, 'create'])->name('etudiant.create');
-// Route::post('/etudiant-create', [EtudiantController::class, 'store'])->name('etudiant.store');
-
-
+// Route::get('/registration',[CustomAuthController::class, 'create'])->name('registration')->middleware('can:create-users');
+Route::get('/registration',[CustomAuthController::class, 'create'])->name('registration');
+Route::post('/registration',[CustomAuthController::class, 'store']);
 
 
 /* ------- * ROUTES LOGIN/AUTHENTICATION * ------- */
@@ -42,13 +38,6 @@ Route::post('/forgot-password', [CustomAuthController::class, 'tempPassword'])->
 Route::get('/new-password/{user}/{tempPassword}', [CustomAuthController::class, 'newPassword'])->name('new.password');
 Route::post('/new-password/{user}/{tempPassword}', [CustomAuthController::class, 'storeNewPassword']);
 Route::get('/logout', [CustomAuthController::class, 'logout'])->name('logout');
-
-
-/* ------- * CRÉER ET STOCKER NOUVEL COMPTE * ------- */
-
-// Route::get('/registration',[CustomAuthController::class, 'create'])->name('registration')->middleware('can:create-users');
-Route::get('/registration',[CustomAuthController::class, 'create'])->name('registration');
-Route::post('/registration',[CustomAuthController::class, 'store']);
 
 
 /* ------- * UNE FOIS CONNECTÉ/É... * ------- */
@@ -88,7 +77,7 @@ Route::get('/lang/{locale}', [LocalizationController::class, 'index'])->name('la
 //     views/layouts/layout.blade.php
 //     views/home.blade.php
 
-// CREER COMPTE
+// CRÉER COMPTE
 // URL slug : '/registration'
 // views files: 
 //     views/layouts/layout.blade.php

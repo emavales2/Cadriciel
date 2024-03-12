@@ -8,7 +8,7 @@
     </div>
     @endif
                             
-    <form  method="post">
+    <form method="post">
         @csrf
         <header class="text-center py-2 fw-bold fs-2em text-primary">
         @lang('lang.new_user_title')
