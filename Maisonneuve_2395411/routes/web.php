@@ -59,8 +59,8 @@ Route::get('/article-create', [ArticleController::class, 'create'])->name('artic
 Route::post('/article-create',[ArticleController::class, 'store'])->middleware('auth');
 Route::get('/article/{article}', [ArticleController::class, 'show'])->name('article.show')->middleware('auth');
 Route::get('/article-edit/{article}', [ArticleController::class, 'edit'])->name('article.edit')->middleware('auth');
-Route::put('/article-edit/{article}', [ArticleController::class, 'update'])->name('article.update')->middleware('auth', 'owner');
-Route::delete('/article/{article}', [ArticleController::class, 'destroy'])->name('article.delete')->middleware('auth', 'owner');
+Route::put('/article-edit/{article}', [ArticleController::class, 'update'])->name('article.update')->middleware('auth');
+Route::delete('/article/{article}', [ArticleController::class, 'destroy'])->name('article.delete')->middleware('auth');
 
 
 /* ------- * LANGUE * ------- */

@@ -43,10 +43,13 @@ class CustomAuthController extends Controller {
     
      public function store(Request $request) {
         
+        // For validation, names must match where they are called in the blade, but not necessarily the bd
         $request->validate([
             'name' => 'required|string',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:6|max:20',
+            'birthday' => 'required',
+            'city' => 'required',
         ]);
 
         $user = new User([

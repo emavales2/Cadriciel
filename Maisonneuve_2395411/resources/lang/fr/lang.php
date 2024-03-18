@@ -4,13 +4,16 @@
 // FR folder
 return [
     // NAV
-    'hello' => 'bonjour',
+    'hello' => 'Bonjour',
     'dashboard' => 'espace membre',
     'profile' => 'mon profil',
     'register_user' => 'créer compte',
     'new_article' => 'créer article',
     'eng' => 'ANG',
     'fr' => 'FRA',
+
+    // FOOTER
+    'footer' => 'Erika Ampudia-Vales - Tous droits réservés 2024',
 
     // HOME
     'welcome' => 'Bienvenu.e',
@@ -46,12 +49,12 @@ return [
     'save_b' => 'SAUVEGARDER',
     'post_b' => 'PUBLIER',
     'edit_b' => 'MODIFIER',
-    'delete_b' => 'ELIMINER',
-    'new_art_b' => 'CRÉER ARTICLE',
+    'delete_b' => 'SUPPRIMER',
+    'new_art_b' => 'CRÉER NOUVEL ARTICLE',
     'cancel_b' => 'ANNULER',
     'back_b' => 'RETOURNER',
-    'yes_b' => 'YES',
-    'no_b' => 'NO',
+    'yes_b' => 'OUI',
+    'no_b' => 'NON',
 
     // ERRORS OR EMPTY etc
     'no_art' => 'Aucun articles disponible',

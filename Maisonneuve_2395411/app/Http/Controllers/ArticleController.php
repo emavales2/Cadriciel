@@ -22,8 +22,7 @@ class ArticleController extends Controller
             // $articles = Article::all();
             // $articles = Article::orderBy('title')->paginate(20);
             $articles = Article::orderBy('created_at')->with('articleHasUser.userHasEtudiant')->paginate(10);
-            
-            // return($articles);
+
             return view('article.index', compact('articles'));
         // }
         // return redirect(route('login'));
@@ -37,7 +36,6 @@ class ArticleController extends Controller
     public function create() {
 
         // return view('article.create', compact('articles'));
-
         $users = User::all();
         return view('article.create', compact('users'));
     }
@@ -64,11 +62,7 @@ class ArticleController extends Controller
 
         //return $newArticle;
         // return redirect(route('article.show', $newArticle->id))->withSuccess(trans('lang.text_success_article'));
-        return redirect(route('article.show', $newArticle->id));
-
-
-
-        
+        return redirect(route('article.show', $newArticle->id));   
     }
 
 
@@ -117,6 +111,7 @@ class ArticleController extends Controller
 
         return redirect(route('article.show', $article->id))->withSuccess('Article mis a jour!');
     }
+    
 
     /**
      * Remove the specified resource from storage.
@@ -128,7 +123,7 @@ class ArticleController extends Controller
         
         $article->delete();
 
-        return redirect(route('article.index'))->withSuccess('Article effacé!');
+        return redirect(route('dashboard'))->withSuccess('Article effacé!');
     }
 
     public function pagination() {

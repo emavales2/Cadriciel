@@ -4,13 +4,16 @@
 // EN folder
 return [
     // NAV
-    'hello' => 'hello',
+    'hello' => 'Hello',
     'dashboard' => 'dashboard',
     'profile' => 'my profile',
     'register_user' => 'new account',
     'new_article' => 'new article',
     'eng' => 'ENG',
     'fr' => 'FRE',
+
+    // FOOTER
+    'footer' => 'Erika Ampudia-Vales - All rights reserved 2024',
 
     // HOME
     'welcome' => 'Welcome',
@@ -47,7 +50,7 @@ return [
     'post_b' => 'POST',
     'edit_b' => 'EDIT',
     'delete_b' => 'DELETE',
-    'new_art_b' => 'NEW ARTICLE',
+    'new_art_b' => 'PUBLISH NEW ARTICLE',
     'cancel_b' => 'CANCEL',
     'back_b' => 'BACK',
     'yes_b' => 'YES',
