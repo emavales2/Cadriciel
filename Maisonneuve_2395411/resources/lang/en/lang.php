@@ -42,6 +42,7 @@ return [
     'art_title' => 'Article Title',
     'art_body' => 'Article Body',
     'author' => 'Written By',
+    'author_min' => 'written by',
     'date' => 'Posted On',
 
     // BUTTONS

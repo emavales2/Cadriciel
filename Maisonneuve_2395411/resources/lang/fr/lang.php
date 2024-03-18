@@ -42,6 +42,7 @@ return [
     'art_title' => 'Titre de l\'article',
     'art_body' => 'Contenu de l\'article',
     'author' => 'Écrit par',
+    'author_min' => 'écrit par',
     'date' => 'Date de publication',
 
     // BUTTONS

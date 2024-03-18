@@ -7,8 +7,9 @@
     <div class="row justify-content-center m-6 mb-8">
         <!-- ---- * CARD COMPONENT * ---- -->
         <article class="card p-5 w-100 gap-4 border border-dark-subtle">  
-            <header class="section_title text-primary py-3">
-                {{ $article->title }}
+            <header class="py-3 d-flex flex-column align-self-center text-center">
+                <h2 class="section_title text-primary py-2">{{ $article->title }}</h2>
+                <h3 class="fs-6 text-black-50 text-center fst-italic">@lang('lang.author_min') {{ $article->articleHasUser->userHasEtudiant->name }}</h3>
             </header>
 
             <!-- ---- * Card Body Content * ---- -->
