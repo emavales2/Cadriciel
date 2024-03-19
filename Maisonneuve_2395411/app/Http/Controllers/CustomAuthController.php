@@ -42,14 +42,15 @@ class CustomAuthController extends Controller {
      * @return \Illuminate\Http\Response */
     
      public function store(Request $request) {
-        
+        // dd($request->all());
+
         // For validation, names must match where they are called in the blade, but not necessarily the bd
         $request->validate([
             'name' => 'required|string',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:6|max:20',
             'birthday' => 'required',
-            'city' => 'required',
+            'ville_id' => 'required',
         ]);
 
         $user = new User([
@@ -71,7 +72,7 @@ class CustomAuthController extends Controller {
         // Save Etudiant and associate it with the User
         $etudiant->save();
 
-        return redirect(route('login'))->withSuccess('Compte enregistré !');
+        return redirect(route('login'))->withSuccess('Compte enregistré!');
     }
 
 
@@ -96,7 +97,7 @@ class CustomAuthController extends Controller {
             $user = Auth::getProvider()->retrieveByCredentials($credentials);            
             Auth::login($user, $request->get('remember'));
             
-            return redirect()->intended('dashboard')->withSuccess('Signed in');
+            return redirect()->intended('dashboard')->withSuccess('Succès connexion');
     }
 
 

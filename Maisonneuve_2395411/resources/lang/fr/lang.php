@@ -37,6 +37,7 @@ return [
     'select_city' => 'Selectionnez votre ville SVP',
     'username' => 'Nom utilisateur',
     'birthdate' => 'Date de naissance',
+    'reg_success' => 'Nouvel compte enregistré avec succès!',
 
     // CREATE/EDIT FORMS : article
     'art_title' => 'Titre de l\'article',

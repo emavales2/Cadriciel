@@ -85,16 +85,16 @@
                     <!-- ---- * Input Field + Error Validation * ---- -->
                     <article class="control-group col-12">
                         <label for="ville">@lang('lang.city')</label>
-                        <select id="ville" name="ville_id" class="form-control mt-2">                    
+                        <select id="ville_id" name="ville_id" class="form-control mt-2">                    
                             <option value=null>@lang('lang.select_city')</option> 
                             @foreach($villes as $ville)
                             <option value="{{ $ville->id }}">{{ $ville->name }}</option>                       
                             @endforeach                    
                         </select>
 
-                        @if ($errors->has('city'))
+                        @if ($errors->has('ville_id'))
                         <div class="text-danger mt-2">
-                            {{$errors->first('city')}}
+                            {{$errors->first('ville_id')}}
                         </div>
                         @endif
                     </article>
